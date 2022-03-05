@@ -13,18 +13,39 @@ function getFirebaseModules(){
 
 function getUser(){
   const {auth} = getFirebaseModules();
+  return auth.currentUser;
 }
 
-function checkUser(){
+function initHandlers(){
   document.addEventListener("DOMContentLoaded", function () {
     const {auth} = getFirebaseModules();
+    const galleryPath = '/gallery.html';
 
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
+        const pathname = window.location.pathname;
+        const galleryPath = '/gallery.html';
+        if (pathname !== galleryPath) {
+          window.location.pathname = galleryPath;
+        }
       } else {
-        console.log('no user');
+        const pathname = window.location.pathname;
+        if (pathname === galleryPath) {
+          window.location.pathname = '/';
+        }
       }
-    })
+    });
   });
+
+  const logoutButton = document.getElementById('logout-button');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', async (event) => {
+      try {
+        const {auth} = getFirebaseModules();
+        await auth.signOut();
+      } catch (e){
+        logError(e);
+      }
+    });
+  }
 }
