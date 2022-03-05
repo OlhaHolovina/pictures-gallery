@@ -3,10 +3,24 @@ document.getElementById('register-form').addEventListener('submit', async (event
   try {
     const email = document.getElementById('register-email').value;
     const password = document.getElementById('register-password').value;
-    const {auth} = getFirebaseModules();
-    const user = await auth.createUserWithEmailAndPassword(email, password);
-    console.log(user);
-    // todo save it to the DB
+    const firstName = document.getElementById('register-firstName').value;
+    const lastName = document.getElementById('register-lastName').value;
+    const {auth, db} = getFirebaseModules();
+    const userData = await auth.createUserWithEmailAndPassword(email, password);
+
+    // todo form validation
+    if (!firstName) throw new Error('no firstName');
+    if (!lastName) throw new Error('no lastName');
+
+    const uid = userData.user.uid;
+    const user = {
+      uid,
+      firstName,
+      lastName,
+      email,
+    }
+
+    await db.collection("users").doc(uid).set(user);
   } catch (e){
     logError(e);
   }

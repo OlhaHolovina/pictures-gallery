@@ -16,6 +16,13 @@ function getUser(){
   return auth.currentUser;
 }
 
+// set timout to have enough time to save user
+function redirectUser(url){
+  setTimeout(() => {
+    window.location.pathname = url;
+  }, 2000)
+}
+
 function initHandlers(){
   document.addEventListener("DOMContentLoaded", function () {
     const {auth} = getFirebaseModules();
@@ -26,12 +33,13 @@ function initHandlers(){
         const pathname = window.location.pathname;
         const galleryPath = '/gallery.html';
         if (pathname !== galleryPath) {
-          window.location.pathname = galleryPath;
+          redirectUser(galleryPath);
         }
       } else {
         const pathname = window.location.pathname;
         if (pathname === galleryPath) {
           window.location.pathname = '/';
+          redirectUser('/');
         }
       }
     });
