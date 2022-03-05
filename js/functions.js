@@ -16,13 +16,6 @@ function getUser(){
   return auth.currentUser;
 }
 
-// set timeout to have enough time to save user
-function redirectUser(url){
-  setTimeout(() => {
-    window.location.pathname = url;
-  }, 2000)
-}
-
 function initHandlers(){
   document.addEventListener("DOMContentLoaded", function () {
     const {auth} = getFirebaseModules();
@@ -33,13 +26,16 @@ function initHandlers(){
         const pathname = window.location.pathname;
         const galleryPath = '/gallery.html';
         if (pathname !== galleryPath) {
-          redirectUser(galleryPath);
+          // set timeout to have enough time to save user before redirect
+          // todo separate register page
+          setTimeout(() => {
+            window.location.pathname = galleryPath;
+          }, 2000)
         }
       } else {
         const pathname = window.location.pathname;
         if (pathname === galleryPath) {
           window.location.pathname = '/';
-          redirectUser('/');
         }
       }
     });
