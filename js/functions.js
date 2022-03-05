@@ -16,7 +16,7 @@ function getUser(){
   return auth.currentUser;
 }
 
-// set timout to have enough time to save user
+// set timeout to have enough time to save user
 function redirectUser(url){
   setTimeout(() => {
     window.location.pathname = url;
