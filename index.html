@@ -44,7 +44,14 @@
     };
 
     firebase.initializeApp(firebaseConfig);
-    checkUser();
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const user = getUser();
+      if(user) {
+        window.location = '/gallery.html';
+      }
+    });
+
   </script>
 </body>
 </html>

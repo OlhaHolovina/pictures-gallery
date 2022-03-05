@@ -28,6 +28,7 @@
 </footer>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="js/functions.js"></script>
@@ -45,7 +46,10 @@
   firebase.initializeApp(firebaseConfig);
 
   document.addEventListener("DOMContentLoaded", function () {
-    checkUser();
+    const user = getUser();
+    if(!user) {
+      window.location = '/index.html';
+    }
   });
 </script>
 </body>

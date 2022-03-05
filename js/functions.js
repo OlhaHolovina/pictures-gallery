@@ -1,3 +1,8 @@
+function logError(error) {
+  alert(error.message);
+  console.log(error);
+}
+
 function getFirebaseModules(){
   const db = firebase.firestore();
   const storage = firebase.storage();
@@ -6,21 +11,20 @@ function getFirebaseModules(){
   return {db, storage, auth };
 }
 
+function getUser(){
+  const {auth} = getFirebaseModules();
+}
+
 function checkUser(){
-  return new Promise((resolve, reject) => {
-    document.addEventListener("DOMContentLoaded", function () {
-      const {auth} = getFirebaseModules();
+  document.addEventListener("DOMContentLoaded", function () {
+    const {auth} = getFirebaseModules();
 
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          window.location = '/gallery.html';
-          resolve(user);
-        } else {
-          window.location = '/index.html';
-          resolve(null);
-        }
-      })
-    });
-  })
-
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user);
+      } else {
+        console.log('no user');
+      }
+    })
+  });
 }
